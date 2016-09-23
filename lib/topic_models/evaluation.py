@@ -1,4 +1,4 @@
-from sklearn.metrics import adjusted_rand_score, v_measure_score
+from sklearn.metrics import *
 import settings
 import os
 import numpy as np
@@ -29,6 +29,9 @@ if __name__ == '__main__':
     lda_corpus = semantic.build_lda_corpus(bow=False)
 
     clustering = Clusterer(tmp_folder,lda_corpus, n_docs=lda_corpus.num_docs)
-    k_labels, k_means = clustering.mini_k_clusters(k=5, corpus_type='lda_tfidf')
+    k_labels, k_means = clustering.mini_k_clusters(k=5, corpus_type='tfidf')
     print("Adjusted Rand Score = {}".format(adjusted_rand_score(get_labels(), k_labels)))
     print("V Measure Score = {}".format(v_measure_score(get_labels(), k_labels)))
+    print("Adjusted mutual info Score = {}".format(adjusted_mutual_info_score(get_labels(), k_labels)))
+    print("Mutual info Score = {}".format(mutual_info_score(get_labels(), k_labels)))
+    print("Normalized mutual info Score = {}".format(normalized_mutual_info_score(get_labels(), k_labels)))
