@@ -16,6 +16,7 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s',
 
 additional_stops = pre_process.STOPWORDS
 
+
 class VectorModels(object):
     def __init__(self, data_loc, tmp_folder,
                  stopwords=additional_stops, sample_size=None):
@@ -24,7 +25,7 @@ class VectorModels(object):
         self.tmp_folder = tmp_folder
         self.stopwords = stopwords
 
-    def build_corpus(self, no_below=5, no_above=0.75):
+    def build_corpus(self, no_below=15, no_above=0.5):
         mycorpus = pre_process.MyCorpus(self.data_loc)
         mycorpus = self.filter_stopwords(mycorpus, self.stopwords)
 
@@ -51,7 +52,7 @@ class VectorModels(object):
         mycorpus.dictionary.compactify()
         return mycorpus
 
-    def load_corpus(self, no_below=5, no_above=0.75):
+    def load_corpus(self, no_below=15, no_above=0.5):
         corpus_file = os.path.join(self.tmp_folder, 'corpus.mm')
         dictionary_file = os.path.join(self.tmp_folder, 'corpus.dict')
         if os.path.isfile(corpus_file) and os.path.isfile(dictionary_file):

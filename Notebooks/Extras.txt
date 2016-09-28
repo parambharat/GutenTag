@@ -1,0 +1,16 @@
+
+#### Non-Negative Matrix Factorization(NMF)
+
+Given a non-negative input matrix, which describes a set of items using a fixed number of features, NMF produces a factorization of the input matrix to reveal meaningful **feature  groups** that are hidden in the data. Each item can be viewed as being built up from these features groups. **NMF** allows us to identify clusters of items that are from these features groups. In our project the input set of items is the document-term frequency matrix. The original term-document matrix **`A`** is factorized into two smaller matrices **`W`** and **`H`** each having  *`k`* dimensions. The key parameter *`k`* controls the number of topics that will be produced. The rows of the matrix **`W`** provides weights for the input documents relative to the *`k`* topics – these values indicate the strength of association between documents and topics.
+
+Once the document-term matrix **`A`** has been constructed, we can apply NMF topic modeling as follows:
+1. Select an initial pair of factors with *`k`* dimensions. NMF algorithms are often initialized with random factors. However, this can lead to many different “unstable” results, depending on the random values. To ensure a single definitive output, we generate initial factors using the Non-negative Double Singular Value Decomposition (NNDSVD) approach proposed by [Boutsidis & Gallopoulos](http://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=138C4D6DAF3E212151D3607454DF3055?doi=10.1.1.137.8281&rep=rep1&type=pdf).
+2. Use a numerical solver such as [`Coordinate Descent solver`](https://en.wikipedia.org/wiki/Coordinate_descent) to apply the standard Euclidean formulation of NMF, seeding using the initial factors from Step 1, for a fixed number of iterations (e.g. 100) to produce final factors **`W`**,**`H`**.
+3. The resulting *`k`* topics are defined by:
+    a. Topic descriptions as given by the top-ranked terms in the columns of the factor *`W`*
+    b. Document membership weights as given by the values in the rows of the **`H`**.
+
+We implement the algorithm on the term-document matrix using [NMF](http://scikit-learn.org/stable/modules/generated/sklearn.decomposition.NMF.html#sklearn-decomposition-nmf) implementation in sklearn and initialize with the following parameters:
+```
+NMF(n_components=5, init='nndsvd', solver='cd', tol=0.0001, max_iter=200, random_state=42)
+```
