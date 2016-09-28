@@ -1,0 +1,36 @@
+from sklearn.linear_model import LogisticRegression, PassiveAggressiveClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier
+from sklearn.naive_bayes import MultinomialNB, BernoulliNB
+from sklearn.pipeline import Pipeline, FeatureUnion
+
+from sklearn.base import BaseEstimator, TransformerMixin
+class ModelTransformer(TransformerMixin):
+
+    def __init__(self, model):
+        self.model = model
+
+    def fit(self, *args, **kwargs):
+        self.model.fit(*args, **kwargs)
+        return self
+
+    def transform(self, X, **transform_params):
+        return DataFrame(self.model.predict(X))
+        
+('estimators', FeatureUnion([('dtc', ModelTransformer(DecisionTreeClassifier())),
+                             ('etc', ModelTransformer(ExtraTreesClassifier())),
+                             ('rfc', ModelTransformer(RandomForestClassifier())),
+                             ('pac', ModelTransformer(PassiveAggressiveClassifier())),
+                             ('mnc', ModelTransformer(MultinomialNB())),
+                             ('lrc', ModelTransformer(LogisticRegression())),
+                             ()
+                             ]
+                           )
+)
+
+('decomposers', FeatureUnion([('lsa', TruncatedSVD()),
+                                                   ('lda', LatentDirichletAllocation()),
+                                                   ('nmf', NMF())
+                                                   ]
+                                                  )
+                      ),

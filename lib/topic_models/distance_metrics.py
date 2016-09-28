@@ -7,6 +7,7 @@ from sklearn.metrics import pairwise_distances
 from scipy.stats import entropy
 from numpy.linalg import norm
 import numpy as np
+import settings
 
 from time import time
 import logging
@@ -69,9 +70,8 @@ if __name__ == '__main__':
     from lib.topic_models.semantic_models import TopicModels
 
     start_corpus = time()
-    cwd = os.getcwd()
-    data_loc = os.path.join(cwd, 'tmp', 'text_corpus.dat', )
-    tmp_folder = os.path.join(cwd, 'tmp', 'modeldir')
+    data_loc = os.path.join(settings.project_root, 'tmp', 'text_corpus.dat', )
+    tmp_folder = os.path.join(settings.project_root, 'tmp', 'modeldir')
 
     vectors = VectorModels(data_loc, tmp_folder)
     corpus, dictionary = vectors.load_corpus()
